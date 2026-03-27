@@ -60,34 +60,73 @@ body {
 
 /* ===== CUSTOM CURSOR ===== */
 
-.cursor-dot {
-  width:18px; height:18px; border-radius:50%;
-  /*background: var(--accent);*/
-  position:fixed; pointer-events:none; z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:transform 0.08s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
-  box-shadow: 0 0 8px rgba(37,99,235,0.6);
-}
 .cursor-ring {
-  width:38px; height:38px; border-radius:50%;
+  width:38px;
+  height:38px;
+  border-radius:50%;
   border: 1.5px solid rgba(37,99,235,0.35);
-  position:fixed; pointer-events:none; z-index:9998;
+  position:fixed;
+  pointer-events:none;
+  z-index:9998;
   transform:translate(-50%,-50%);
   transition:all 0.18s cubic-bezier(.25,.46,.45,.94);
-  /*backdrop-filter: blur(1px);*/
-}
-.cursor-ring.hover {
-  width:54px; height:54px;
-  border-color: rgba(124,58,237,0.5);
-  background: rgba(124,58,237,0.04);
-}
-body:has(a:hover) .cursor-dot,
-body:has(button:hover) .cursor-dot {
-  width:14px; height:14px;
-  background: var(--accent2);
-  box-shadow: 0 0 14px rgba(124,58,237,0.7);
+
+  backdrop-filter: blur(4px);
+  background: rgba(255,255,255,0.04);
 }
 
+.cursor-ring.hover {
+  width:54px;
+  height:54px;
+  border-color: rgba(124,58,237,0.5);
+  background: rgba(124,58,237,0.08);
+}
+
+/* ===== INNER MAGNIFIER ===== */
+.magnifier {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+
+  border: 2px solid rgba(124,58,237,0.4);
+
+  /* glass effect */
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(2px) brightness(1.1);
+
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+/* zoomed content inside */
+.magnifier::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: var(--bg-snapshot);
+  background-repeat: no-repeat;
+
+  transform: scale(1.8);
+  transform-origin: top left;
+}
+
+/* ===== HOVER STATES ===== */
+body:has(a:hover) .magnifier,
+body:has(button:hover) .magnifier {
+  width: 60px;
+  height: 60px;
+  border-color: var(--accent2);
+}
+
+body:has(a:hover) .cursor-ring,
+body:has(button:hover) .cursor-ring {
+  width:54px;
+  height:54px;
+}
 /* ===== LIQUID BLOB CURSOR TRAIL ===== */
 .cursor-blob {
   width:200px; height:200px; border-radius:50%;
