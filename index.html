@@ -1052,7 +1052,7 @@ async function sendMsg(){
     t.remove();
     var reply=(d.content||[]).map(function(c){return c.text||'';} ).join('')||'Sorry, unable to respond right now. Please contact Nafees at nafees.xcix@gmail.com';
     addMsg(reply,'ai');
-  }catch(e){t.remove();addMsg('Connection issue. Please contact Nafees at nafees.xcix@gmail.com','ai');}
+  }catch(e){t.remove();addMsg('Internal AI error encountered. Please contact Mr. Nafees at nafees.xcix@gmail.com','ai');}
   btn.disabled=false;
 }
 function addMsg(txt,role){
