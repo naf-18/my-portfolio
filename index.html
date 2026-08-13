@@ -251,19 +251,21 @@ nav::after {
   flex-shrink:0; width:clamp(240px,28vw,280px);
   background:var(--card-solid);
   border-radius:22px;
-  border:1px solid var(--border);
+  border:none;
   box-shadow:var(--shadow-lg);
-  overflow:hidden;
+  overflow:visible;
   position:relative;
   align-self:center;
+  isolation:isolate;
 }
-/* Neon gradient border effect */
+/* Neon gradient border — rendered in a separate layer to prevent load glitch */
 .profile-card::before {
-  content:""; position:absolute; inset:-1.5px; border-radius:23px; z-index:-1;
+  content:""; position:absolute; inset:-2px; border-radius:24px; z-index:-1;
   background:linear-gradient(135deg, var(--neon1), var(--neon2), var(--neon3), var(--neon1));
   background-size:300% 300%;
   animation:neonRotate 4s linear infinite;
-  opacity:0.6;
+  opacity:0.55;
+  will-change:background-position;
 }
 @keyframes neonRotate {
   0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;}
@@ -271,6 +273,7 @@ nav::after {
 .pc-top {
   width:100%; height:220px; position:relative; overflow:hidden;
   background:linear-gradient(180deg, rgba(37,99,235,0.08) 0%, rgba(124,58,237,0.05) 100%);
+  border-radius:22px 22px 0 0;
 }
 .pc-top img {
   width:100%; height:100%;
@@ -283,6 +286,8 @@ nav::after {
 }
 .pc-bottom {
   padding:16px 22px 22px; text-align:center;
+  background:var(--card-solid);
+  border-radius:0 0 22px 22px;
 }
 .pc-name { font-size:16px; font-weight:800; color:var(--text); }
 .pc-role { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; margin-top:5px; font-weight:700;
@@ -592,8 +597,40 @@ section { position:relative; z-index:1; padding:80px 56px; }
 .av-dot { width:8px; height:8px; border-radius:50%; background:#34d399; animation:pulse 2s infinite; }
 .avail-title { font-size:24px; font-weight:900; color:#fff; margin-bottom:12px; line-height:1.15; position:relative; z-index:1; }
 .avail-desc { font-size:13px; color:rgba(255,255,255,0.75); line-height:1.8; margin-bottom:24px; position:relative; z-index:1; }
-.avail-link { color:#fff; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.4); padding-bottom:3px; display:inline-block; font-weight:700; transition:letter-spacing 0.2s; position:relative; z-index:1; }
-.avail-link:hover { letter-spacing:2.5px; }
+.avail-btns { display:flex; flex-direction:column; gap:10px; position:relative; z-index:1; }
+.avail-btn {
+  display:flex; align-items:center; gap:12px;
+  padding:13px 20px; border-radius:10px;
+  font-size:12px; letter-spacing:1.2px; text-transform:uppercase;
+  font-weight:700; text-decoration:none; cursor:pointer; border:none;
+  transition:transform 0.2s, box-shadow 0.2s, background 0.2s;
+  font-family:inherit; width:100%;
+}
+.avail-btn:hover { transform:translateY(-2px); }
+.avail-btn-icon {
+  width:34px; height:34px; border-radius:8px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px;
+}
+.avail-btn-text { display:flex; flex-direction:column; align-items:flex-start; gap:1px; }
+.avail-btn-label { font-size:12px; letter-spacing:1.2px; text-transform:uppercase; font-weight:700; }
+.avail-btn-sub { font-size:10px; letter-spacing:0.5px; text-transform:none; font-weight:400; opacity:0.75; }
+/* Email button — solid white */
+.avail-btn-email {
+  background:rgba(255,255,255,0.18);
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.35);
+}
+.avail-btn-email .avail-btn-icon { background:rgba(255,255,255,0.15); }
+.avail-btn-email:hover { background:rgba(255,255,255,0.28); box-shadow:0 4px 18px rgba(0,0,0,0.18); }
+/* Calendly button — accent green */
+.avail-btn-cal {
+  background:#34d399;
+  color:#064e3b;
+  border:1px solid rgba(52,211,153,0.4);
+}
+.avail-btn-cal .avail-btn-icon { background:rgba(255,255,255,0.25); }
+.avail-btn-cal:hover { background:#2dd4bf; box-shadow:0 4px 18px rgba(52,211,153,0.4); }
 
 /* ===== FOOTER ===== */
 footer {
@@ -746,6 +783,21 @@ footer::before {
 <section id="experience">
   <div class="sec-label">Career History</div>
   <div class="sec-title fi">Work Experience</div>
+
+  <div class="exp-item fi">
+    <div>
+      <div class="exp-period">April 2026 &mdash; Present</div>
+      <div class="exp-co">Rubis Asphalt<br>Dubai, UAE</div>
+      <div class="exp-current">Current Role</div>
+    </div>
+    <div>
+      <div class="exp-title">IT Specialist</div>
+      <div class="exp-desc">Leads IT infrastructure deployments across multiple countries and maritime operations, supporting 13 affiliate offices across India, Africa, and Europe. Designs and secures hybrid networks spanning satellite, cloud, and terrestrial environments, including Iridium satellite communications for global connectivity. Provides advanced L2/L3 support across corporate offices, affiliates, and maritime vessels; acts as escalation point for critical infrastructure, network, and security incidents. Manages on-premise, cloud, and vessel-based servers, deploys ESET endpoint protection globally, and oversees patching, security policies, and compliance standards. Develops internal WordPress productivity applications, manages IT procurement, and standardizes IT systems and procedures globally.</div>
+      <div class="tags">
+        <span class="tag">ESET Protect and Endpoint</span><span class="tag">WordPress</span><span class="tag">Vessel IT Operation</span>
+      </div>
+    </div>
+  </div>
 
   <div class="exp-item fi">
     <div>
@@ -973,9 +1025,24 @@ footer::before {
     </div>
     <div class="avail-card fi">
       <div class="avail-status"><span class="av-dot"></span>Open to opportunities</div>
-      <div class="avail-title">Let&rsquo;s Get Connect</div>
+      <div class="avail-title">Let&rsquo;s Get Connected</div>
       <div class="avail-desc">Based in Dubai, available for relocation and willing to commute. 6+ years of proven IT excellence ready to serve your organisation.</div>
-      <a href="mailto:nafees.xcix@gmail.com" class="avail-link">Send an email &#8594;</a>
+      <div class="avail-btns">
+        <a href="mailto:nafees.xcix@gmail.com" class="avail-btn avail-btn-email">
+          <div class="avail-btn-icon">&#9993;</div>
+          <div class="avail-btn-text">
+            <span class="avail-btn-label">Send an Email</span>
+            <span class="avail-btn-sub">Opens your email client</span>
+          </div>
+        </a>
+        <a href="https://calendly.com/im-nafees" target="_blank" rel="noopener noreferrer" class="avail-btn avail-btn-cal">
+          <div class="avail-btn-icon">&#128197;</div>
+          <div class="avail-btn-text">
+            <span class="avail-btn-label">Book a Meeting</span>
+            <span class="avail-btn-sub">Schedule via Calendly</span>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
